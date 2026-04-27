@@ -1,6 +1,6 @@
 {
   "name": "hive-mcp-trade",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for the Hive Cross-Border Trade Finance platform. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereu",
   "type": "module",
   "main": "server.js",
