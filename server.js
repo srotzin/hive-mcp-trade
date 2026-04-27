@@ -103,7 +103,7 @@ const SERVICE_CFG = {
   tagline: "Same-block USDT/USDC settlement for SMB cross-border invoices. $0 wire fee.",
   description: "MCP server for HiveTrade \u2014 cross-border SMB invoice settlement. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereum, or Solana. 0.30% / 0.20% all-in vs 1-3% wire+FX. Real rails, real chains.",
   keywords: ["mcp", "model-context-protocol", "x402", "agentic", "ai-agent", "ai-agents", "llm", "hive", "hive-civilization", "trade-finance", "cross-border", "smb", "usdt", "usdc", "base", "base-l2", "ethereum", "solana", "invoice", "supply-chain"],
-  externalUrl: "https://hive-mcp-gateway.onrender.com/trade",
+  externalUrl: "https://hive-mcp-trade.onrender.com",
   gatewayMount: "/trade",
   version: "1.0.2",
   pricing: [
