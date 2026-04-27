@@ -9,6 +9,7 @@
  */
 
 import express from 'express';
+import { renderLanding, renderRobots, renderSitemap, renderSecurity, renderOgImage, seoJson, BRAND_GOLD } from './meta.js';
 
 const app = express();
 app.use(express.json());
@@ -78,6 +79,25 @@ properties: {
     }
 ];
 
+
+const SERVICE_CFG = {
+  service: "hive-mcp-trade",
+  shortName: "HiveTrade",
+  title: "HiveTrade \u00b7 Cross-Border SMB Invoice Settlement MCP",
+  tagline: "Same-block USDT/USDC settlement for SMB cross-border invoices. $0 wire fee.",
+  description: "MCP server for HiveTrade \u2014 cross-border SMB invoice settlement. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereum, or Solana. 0.30% / 0.20% all-in vs 1-3% wire+FX. Real rails, real chains.",
+  keywords: ["mcp", "model-context-protocol", "x402", "agentic", "ai-agent", "ai-agents", "llm", "hive", "hive-civilization", "trade-finance", "cross-border", "smb", "usdt", "usdc", "base", "base-l2", "ethereum", "solana", "invoice", "supply-chain"],
+  externalUrl: "https://hive-mcp-gateway.onrender.com/trade",
+  gatewayMount: "/trade",
+  version: "1.0.2",
+  pricing: [
+    { name: "trade_create_invoice", priceUsd: 0, label: "Create invoice \u2014 free" },
+    { name: "trade_get_invoice", priceUsd: 0, label: "Get invoice \u2014 free" },
+    { name: "trade_get_fees", priceUsd: 0, label: "Fee schedule \u2014 free" },
+    { name: "trade_dispute", priceUsd: 0.05, label: "Open dispute (Tier 3)" }
+  ],
+};
+SERVICE_CFG.tools = (typeof TOOLS !== 'undefined' ? TOOLS : (typeof MCP_TOOLS !== 'undefined' ? MCP_TOOLS : [])).map(t => ({ name: t.name, description: t.description }));
 // ─── HTTP helpers ────────────────────────────────────────────────────────────
 async function hiveGet(path, params = {}) {
   const url = new URL(`${HIVE_BASE}${path.startsWith('/') ? path : '/' + path}`);
@@ -175,6 +195,24 @@ app.get('/.well-known/mcp.json', (req, res) => res.json({
   tools: TOOLS.map(t => ({ name: t.name, description: t.description })),
 }));
 
+
+// HIVE_META_BLOCK_v1 — comprehensive meta tags + JSON-LD + crawler discovery
+app.get('/', (req, res) => {
+  res.type('text/html; charset=utf-8').send(renderLanding(SERVICE_CFG));
+});
+app.get('/og.svg', (req, res) => {
+  res.type('image/svg+xml').send(renderOgImage(SERVICE_CFG));
+});
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain').send(renderRobots(SERVICE_CFG));
+});
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml').send(renderSitemap(SERVICE_CFG));
+});
+app.get('/.well-known/security.txt', (req, res) => {
+  res.type('text/plain').send(renderSecurity());
+});
+app.get('/seo.json', (req, res) => res.json(seoJson(SERVICE_CFG)));
 app.listen(PORT, () => {
   console.log(`HiveTrade MCP Server running on :${PORT}`);
   console.log(`  Backend : ${HIVE_BASE}`);
