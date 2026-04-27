@@ -1,6 +1,6 @@
 {
   "name": "hive-mcp-trade",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MCP server for the Hive Cross-Border Trade Finance platform. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereu",
   "type": "module",
   "main": "server.js",
@@ -31,7 +31,13 @@
     "ethereum",
     "solana",
     "invoice",
-    "supply-chain"
+    "supply-chain",
+    "a2a",
+    "agent-card",
+    "oac",
+    "open-agent-card",
+    "attribution",
+    "earn"
   ],
   "author": "Steve Rotzin <steve@thehiveryiq.com> (https://www.thehiveryiq.com)",
   "license": "MIT",
