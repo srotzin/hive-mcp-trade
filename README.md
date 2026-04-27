@@ -1,3 +1,28 @@
+<!-- HIVE_BANNER_V1 -->
+<p align="center">
+  <a href="https://hive-mcp-gateway.onrender.com/trade/health">
+    <img src="https://hive-mcp-gateway.onrender.com/og.svg" alt="Hive Civilization MCP Gateway · Cross-venue spread + yield drivers · ROI radar telemetry" width="100%"/>
+  </a>
+</p>
+
+<h1 align="center">hive-mcp-trade</h1>
+
+<p align="center"><strong>Cross-venue spread + yield drivers · ROI radar telemetry</strong></p>
+
+<p align="center">
+  <a href="https://smithery.ai/server/hivecivilization/hive-mcp-trade"><img alt="Smithery" src="https://img.shields.io/badge/Smithery-hivecivilization%2Fhive-mcp-trade-C08D23?style=flat-square"/></a>
+  <a href="https://glama.ai/mcp/servers"><img alt="Glama" src="https://img.shields.io/badge/Glama-pending-C08D23?style=flat-square"/></a>
+  <a href="https://hive-mcp-gateway.onrender.com/trade/health"><img alt="Live" src="https://img.shields.io/badge/gateway-live-C08D23?style=flat-square"/></a>
+  <a href="https://github.com/srotzin/hive-mcp-trade/releases"><img alt="Release" src="https://img.shields.io/github/v/release/srotzin/hive-mcp-trade?style=flat-square&color=C08D23"/></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-C08D23?style=flat-square"/></a>
+</p>
+
+<p align="center">
+  <code>https://hive-mcp-gateway.onrender.com/trade/mcp</code>
+</p>
+
+---
+
 # HiveTrade
 
 **Cross-border SMB invoice settlement on USDT/USDC rails — $0 wire fee, same-block**
