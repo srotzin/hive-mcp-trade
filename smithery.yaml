@@ -1,0 +1,135 @@
+# Smithery Registry — HiveTrade MCP Server
+# https://smithery.ai
+
+startCommand:
+  type: http
+  configSchema:
+    type: object
+    properties: {}
+    required: []
+  url: https://hivemorph.onrender.com/mcp/hive-mcp-trade
+
+name: hive-mcp-trade
+displayName: HiveTrade — Cross-border SMB invoice settlement on USDT/USDC rails — $0 wire fee, same-block
+version: "1.0.0"
+description: >
+  MCP server for the Hive Cross-Border Trade Finance platform. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereum, or Solana. 0.30% on invoices <= $50K, 0.20% on invoices $50K-$250K. Same-block settlement vs. 2-5 business days for SWIFT. $0 wire fee vs. $25-$50 + 1-3% FX spread.
+
+author:
+  name: Steve Rotzin
+  email: steve@thehiveryiq.com
+  url: https://www.thehiveryiq.com
+
+license: MIT
+homepage: https://github.com/srotzin/hive-mcp-trade
+repository:
+  type: git
+  url: https://github.com/srotzin/hive-mcp-trade
+
+transport: streamable-http
+endpoint: https://hivemorph.onrender.com/mcp
+protocol: "2024-11-05"
+
+categories:
+  - finance
+  - trade-finance
+  - cross-border
+  - smb
+  - web3
+  - agent-to-agent
+
+tags:
+  - mcp
+  - hive
+  - trade-finance
+  - cross-border
+  - smb
+  - usdt
+  - usdc
+  - base-l2
+  - invoice
+  - supply-chain
+
+tools:
+- name: trade_get_fees
+  description: >
+    Get the cross-border invoice fee schedule and SWIFT wire comparison (Hive vs. typical SMB wire fees, FX spreads, settlement times).
+  inputs:
+    []
+- name: trade_get_listing
+  description: >
+    Get the public listing metadata (target user, fee schedule, settlement currencies/chains, cumulative volume, council origin).
+  inputs:
+    []
+- name: trade_create_invoice
+  description: >
+    Create a cross-border invoice. Buyer (SMB) and supplier exchange DIDs; invoice amount + currency + chain selected at creation. Fee auto-computed from tier.
+  inputs:
+    - name: buyer_did
+  type: string
+  required: true
+  description: "DID of the SMB buyer"
+- name: supplier_did
+  type: string
+  required: true
+  description: "DID of the overseas supplier"
+- name: amount_usd
+  type: number
+  required: true
+  description: "Invoice amount in USD (max $250,000 for MVP)"
+- name: settle_currency
+  type: string
+  required: true
+  description: "USDT or USDC"
+- name: settle_chain
+  type: string
+  required: true
+  description: "base, ethereum, or solana"
+- name: supplier_payout_address
+  type: string
+  required: true
+  description: "Supplier's receiving address on the chosen chain"
+- name: memo
+  type: string
+  required: false
+  description: "Free-form invoice memo (PO number, goods description)"
+      - name: trade_get_invoice
+description: >
+  Retrieve invoice status, settlement transaction hash, and dispute history.
+inputs:
+  - name: invoice_id
+type: string
+required: true
+description: "Invoice ID returned from trade_create_invoice"
+- name: trade_dispute_invoice
+  description: >
+    Open a dispute on an invoice. Routes to HiveLaw arbitration if buyer and supplier cannot resolve. Settlement is held in escrow until resolution.
+  inputs:
+    - name: invoice_id
+  type: string
+  required: true
+  description: "Invoice ID"
+- name: claimant_did
+  type: string
+  required: true
+  description: "DID of the disputing party (buyer or supplier)"
+- name: reason
+  type: string
+  required: true
+  description: "Dispute reason"
+- name: evidence_url
+  type: string
+  required: false
+  description: "Optional URL to supporting documents"
+
+runtime:
+  type: node
+  version: ">=18"
+  command: node server.js
+  env:
+    - name: PORT
+      default: "3000"
+      required: false
+    - name: HIVE_BASE
+      default: "https://hivemorph.onrender.com"
+      required: false
