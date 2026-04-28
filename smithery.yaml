@@ -103,7 +103,7 @@ required: true
 description: "Invoice ID returned from trade_create_invoice"
 - name: trade_dispute_invoice
   description: >
-    Open a dispute on an invoice. Routes to HiveLaw arbitration if buyer and supplier cannot resolve. Settlement is held in escrow until resolution.
+    Open a dispute on an invoice. Open a dispute on an invoice. Routes to third-party arbitration providers (Kleros, UMA, Reality.eth) — see hive-mcp-dispute for details. Hive does not arbitrate or hold escrow. if buyer and supplier cannot resolve. Settlement is held in escrow until resolution.
   inputs:
     - name: invoice_id
   type: string
