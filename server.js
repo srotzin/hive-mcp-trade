@@ -259,6 +259,44 @@ app.get('/agent.html', (req, res) => {
   res.type('text/html; charset=utf-8').send(renderRootHtml(HIVE_AGENT_CFG));
 });
 
+
+app.get('/.well-known/agent-card.json', (req, res) => res.json({
+  protocolVersion: '0.3.0',
+  name: 'hive-mcp-trade',
+  description: "Hive Civilization trade MCP — cross-border invoice settlement with x402 USDC settlement.",
+  url: 'https://hive-mcp-trade.onrender.com',
+  version: '1.0.3',
+  provider: { organization: 'Hive Civilization', url: 'https://hiveagentiq.com' },
+  capabilities: { streaming: false, pushNotifications: false },
+  defaultInputModes: ['application/json'],
+  defaultOutputModes: ['application/json'],
+  authentication: { schemes: ['x402', 'api-key'] },
+  payment: {
+    protocol: 'x402', currency: 'USDC', network: 'base',
+    address: '0x15184bf50b3d3f52b60434f8942b7d52f2eb436e'
+  },
+  extensions: {
+    hive_pricing: {
+      currency: 'USDC', network: 'base', model: 'per_call',
+      first_call_free: true, loyalty_threshold: 6,
+      loyalty_message: 'Every 6th paid call is free'
+    }
+  },
+  bogo: {
+    first_call_free: true, loyalty_threshold: 6,
+    pitch: "Pay this once, your 6th paid call is on the house. New here? Add header 'x-hive-did' to claim your first call free.",
+    claim_with: 'x-hive-did header'
+  }
+}));
+
+app.get('/.well-known/ap2.json', (req, res) => res.json({
+  ap2_version: '1.0',
+  agent: 'hive-mcp-trade',
+  payment_methods: ['x402-usdc-base'],
+  treasury: '0x15184bf50b3d3f52b60434f8942b7d52f2eb436e',
+  bogo: { first_call_free: true, loyalty_threshold: 6, claim_with: 'x-hive-did header' }
+}));
+
 app.listen(PORT, () => {
   console.log(`HiveTrade MCP Server running on :${PORT}`);
   console.log(`  Backend : ${HIVE_BASE}`);
