@@ -9,6 +9,7 @@
  */
 
 import express from 'express';
+import { applyLoyaltyDiscount, buildLoyaltyChallenge } from './loyalty.js';
 import { HIVE_EARN_TOOLS, executeHiveEarnTool, isHiveEarnTool } from './hive-earn-tools.js';
 import { buildAgentCard, buildOacJsonLd, renderRootHtml } from './hive-agent-card.js';
 import { renderLanding, renderRobots, renderSitemap, renderSecurity, renderOgImage, seoJson, BRAND_GOLD } from './meta.js';
@@ -184,6 +185,9 @@ return { type: 'text', text: JSON.stringify({ status, ...data }, null, 2) };
 }
 
 // ─── MCP JSON-RPC handler ────────────────────────────────────────────────────
+// Rail 3: base price for trade_create_invoice (0.30% of invoice, min $0 — dispute tier = $0.05)
+const TRADE_BASE_PRICE_ATOMIC = 50000; // $0.05 USDC atomic (dispute tier minimum)
+
 app.post('/mcp', async (req, res) => {
   const { jsonrpc, id, method, params } = req.body || {};
   if (jsonrpc !== '2.0') return res.json({ jsonrpc:'2.0', id, error: { code:-32600, message:'Invalid JSON-RPC' } });
@@ -199,7 +203,29 @@ app.post('/mcp', async (req, res) => {
         return res.json({ jsonrpc:'2.0', id, result: { tools: TOOLS } });
       case 'tools/call': {
         const { name, arguments: args } = params || {};
+        // Rail 3: compute loyalty status for paid tools
+        const isPaidTool = ['trade_dispute_invoice'].includes(name);
+        let loyaltyMeta = null;
+        if (isPaidTool) {
+          loyaltyMeta = await applyLoyaltyDiscount(req, res, TRADE_BASE_PRICE_ATOMIC);
+        }
         const out = await executeTool(name, args || {});
+        // Attach loyalty info to tool result for agent visibility
+        if (loyaltyMeta) {
+          let parsed;
+          try { parsed = JSON.parse(out.text); } catch { parsed = { raw: out.text }; }
+          out.text = JSON.stringify({
+            ...parsed,
+            _rail3_loyalty: {
+              discountBps:     loyaltyMeta.discountAppliedBps,
+              discountPct:     (loyaltyMeta.discountAppliedBps / 100).toFixed(2) + '%',
+              adjustedBaseUsd: (loyaltyMeta.adjustedPrice / 1_000_000).toFixed(6),
+              receiptsAccepted: loyaltyMeta.receiptIdsAccepted.length,
+              brandGold:       '#C08D23',
+              hint: 'Present X-Hive-Prior-Receipts header with Spectral receipt IDs for loyalty discount (5% per receipt, max 25%).',
+            }
+          }, null, 2);
+        }
         return res.json({ jsonrpc:'2.0', id, result: { content: [out] } });
       }
       case 'ping':
