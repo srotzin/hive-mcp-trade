@@ -26,11 +26,11 @@ const HIVE_BASE = process.env.HIVE_BASE || 'https://receipts.thehiveryiq.com';
 const HIVE_AGENT_CFG = {
   name: 'HiveTrade MCP',
   description: "Cross-border SMB invoice settlement MCP server. Real Base USDC and USDT, $0 wire fee, same-block settlement on Base / Ethereum / Solana.",
-  url: 'https://hive-mcp-gateway.onrender.com/trade',
+  url: 'https://mcp-trade.thehiveryiq.com',
   version: '1.0.3',
   repoUrl: 'https://github.com/srotzin/hive-mcp-trade',
   did: 'did:hive:trade',
-  gatewayUrl: 'https://hive-mcp-gateway.onrender.com',
+  gatewayUrl: 'https://mcp-trade.thehiveryiq.com',
   // Tools attached at runtime (after merging earn tools in)
   tools: [],
 };
