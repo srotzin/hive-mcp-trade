@@ -7,7 +7,7 @@ startCommand:
     type: object
     properties: {}
     required: []
-  url: https://hivemorph.onrender.com/mcp/hive-mcp-trade
+  url: https://receipts.thehiveryiq.com/mcp/hive-mcp-trade
 
 name: hive-mcp-trade
 displayName: HiveTrade — Cross-border SMB invoice settlement on USDT/USDC rails — $0 wire fee, same-block
@@ -27,7 +27,7 @@ repository:
   url: https://github.com/srotzin/hive-mcp-trade
 
 transport: streamable-http
-endpoint: https://hivemorph.onrender.com/mcp
+endpoint: https://receipts.thehiveryiq.com/mcp
 protocol: "2024-11-05"
 
 categories:
@@ -131,5 +131,5 @@ runtime:
       default: "3000"
       required: false
     - name: HIVE_BASE
-      default: "https://hivemorph.onrender.com"
+      default: "https://receipts.thehiveryiq.com"
       required: false

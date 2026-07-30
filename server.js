@@ -3,7 +3,7 @@
  * HiveTrade MCP Server
  * Cross-border SMB invoice settlement on USDT/USDC rails — $0 wire fee, same-block
  *
- * Backend: https://hivemorph.onrender.com
+ * Backend: https://receipts.thehiveryiq.com
  * Spec   : MCP 2024-11-05 / Streamable-HTTP / JSON-RPC 2.0
  * Brand  : Hive Civilization gold #C08D23 (Pantone 1245 C)
  */
@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const HIVE_BASE = process.env.HIVE_BASE || 'https://hivemorph.onrender.com';
+const HIVE_BASE = process.env.HIVE_BASE || 'https://receipts.thehiveryiq.com';
 
 // ─── Tool definitions ────────────────────────────────────────────────────────
 
@@ -104,7 +104,7 @@ const SERVICE_CFG = {
   tagline: "Same-block USDT/USDC settlement for SMB cross-border invoices. $0 wire fee.",
   description: "MCP server for HiveTrade \u2014 cross-border SMB invoice settlement. SMB manufacturers paying $5K-$250K invoices to overseas suppliers (Vietnam, Mexico, Bangladesh, India) settle in USDT/USDC on Base, Ethereum, or Solana. 0.30% / 0.20% all-in vs 1-3% wire+FX. Real rails, real chains.",
   keywords: ["mcp", "model-context-protocol", "x402", "agentic", "ai-agent", "ai-agents", "llm", "hive", "hive-civilization", "trade-finance", "cross-border", "smb", "usdt", "usdc", "base", "base-l2", "ethereum", "solana", "invoice", "supply-chain"],
-  externalUrl: "https://hive-mcp-trade.onrender.com",
+  externalUrl: "https://mcp-trade.thehiveryiq.com",
   gatewayMount: "/trade",
   version: "1.0.2",
   pricing: [
@@ -318,7 +318,7 @@ app.get('/.well-known/agent-card.json', (req, res) => res.json({
   protocolVersion: '0.3.0',
   name: 'hive-mcp-trade',
   description: "Hive Civilization trade MCP — cross-border invoice settlement with x402 USDC settlement.",
-  url: 'https://hive-mcp-trade.onrender.com',
+  url: 'https://mcp-trade.thehiveryiq.com',
   version: '1.0.3',
   provider: { organization: 'Hive Civilization', url: 'https://hiveagentiq.com' },
   capabilities: { streaming: false, pushNotifications: false },
